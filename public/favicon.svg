@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#231233" />
+      <stop offset="100%" stop-color="#08060c" />
+    </radialGradient>
+    <linearGradient id="crimson" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff3856" />
+      <stop offset="100%" stop-color="#b80f28" />
+    </linearGradient>
+    <linearGradient id="ivory" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fffdf7" />
+      <stop offset="100%" stop-color="#dfd3bc" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded Obsidian Card / Shield Base -->
+  <rect x="6" y="6" width="116" height="116" rx="26" fill="url(#bg)" stroke="#d91b2e" stroke-width="5" />
+  <rect x="13" y="13" width="102" height="102" rx="20" fill="none" stroke="rgba(245, 239, 226, 0.2)" stroke-width="2" />
+
+  <!-- Crossed Broadsword Blades behind the Crown -->
+  <g stroke="#f5efe2" stroke-width="3" stroke-linejoin="round">
+    <path d="M22 22 L38 25 L102 89 L89 102 L25 38 Z" fill="rgba(245, 239, 226, 0.88)" />
+    <path d="M106 22 L90 25 L26 89 L39 102 L103 38 Z" fill="rgba(245, 239, 226, 0.88)" />
+  </g>
+  <!-- Sword Crossguards -->
+  <path d="M78 106 L106 78" stroke="#22e66b" stroke-width="7" stroke-linecap="round" />
+  <path d="M22 78 L50 106" stroke="#22e66b" stroke-width="7" stroke-linecap="round" />
+
+  <!-- Imperial Gothic King Crown -->
+  <path
+    d="M22 86 L16 42 L44 60 L64 24 L84 60 L112 42 L106 86 Z"
+    fill="url(#ivory)"
+    stroke="#08060c"
+    stroke-width="4.5"
+    stroke-linejoin="round"
+  />
+  <!-- Crown Base Band -->
+  <rect
+    x="22"
+    y="86"
+    width="84"
+    height="14"
+    rx="4"
+    fill="url(#crimson)"
+    stroke="#08060c"
+    stroke-width="4"
+  />
+
+  <!-- Crimson Heart Suit Inlay in the Center of the Crown -->
+  <path
+    d="M64 78 C64 78 48 67 48 55 C48 49 52.5 45.5 57.5 45.5 C60.8 45.5 62.8 47.5 64 50 C65.2 47.5 67.2 45.5 70.5 45.5 C75.5 45.5 80 49 80 55 C80 67 64 78 64 78 Z"
+    fill="url(#crimson)"
+    stroke="#08060c"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+
+  <!-- Emerald Vitality Pips on Crown Tips -->
+  <circle cx="64" cy="18" r="5" fill="#22e66b" stroke="#08060c" stroke-width="2.5" />
+  <circle cx="15" cy="36" r="4.5" fill="#ff2a4b" stroke="#08060c" stroke-width="2.5" />
+  <circle cx="113" cy="36" r="4.5" fill="#ff2a4b" stroke="#08060c" stroke-width="2.5" />
+</svg>
+
