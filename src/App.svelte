@@ -1134,7 +1134,6 @@
   .top-deck {
     width: 100%;
     position: relative;
-    z-index: 30;
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: stretch;
@@ -1566,7 +1565,6 @@
     gap: clamp(8px, 2dvw, 28px);
     align-items: stretch;
     justify-items: center;
-    animation: stageCardDeal 0.28s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .stat-zone {
@@ -1659,7 +1657,7 @@
     animation: numberPopDown 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  /* Floating Delta Popups in Gothic Font (+1 / -1 / +5 / -5) */
+  /* Floating Delta Popups in Gothic Font (+1 / -1 / +5 / -5) — Always above everything including noble buttons */
   .floating-delta {
     position: absolute;
     top: 2%;
@@ -1668,7 +1666,7 @@
     font-family: var(--font-gothic-num);
     font-size: clamp(2.6rem, 12vmin, 5.2rem);
     pointer-events: none;
-    z-index: 15;
+    z-index: 95;
     text-shadow: 0 4px 0 #000;
     animation: deltaFloatAway 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
