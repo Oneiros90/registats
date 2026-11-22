@@ -1,0 +1,9 @@
+{
+  "name": "Registats",
+  "short_name": "Registats",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08070a",
+  "theme_color": "#08070a"
+}
+

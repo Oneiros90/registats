@@ -1,0 +1,94 @@
+:root {
+  /* Gothic / Medieval font for the giant numbers */
+  --font-gothic-num: 'Pirata One', 'UnifrakturMaguntia', Georgia, serif;
+  /* Bebas Neue for the buttons (J, Q, K and +, -) */
+  --font-btn: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
+
+  /* Classic French Playing Card Colors */
+  --card-red: #d91b2e;
+  --card-red-bright: #f5283c;
+  --card-black: #111113;
+  --card-ivory: #f5efe2;
+  --card-ivory-border: #d9ccb4;
+
+  /* Distinct Stat Colors: Emerald Green for Health (Vita), Crimson Red for Attack (Attacco) */
+  --health-color: #22e66b;
+  --health-glow: rgba(34, 230, 107, 0.48);
+  --attack-color: #ff2a4b;
+  --attack-glow: rgba(255, 42, 75, 0.48);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Full-bleed edge-to-edge iOS/Android Home Screen Web App support:
+   Explicitly extends through the bottom iOS safe-area-inset-bottom so there is never an empty gap in Portrait PWA mode */
+html {
+  width: 100vw;
+  height: calc(100% + env(safe-area-inset-bottom, 0px));
+  min-height: 100vh;
+  min-height: 100lvh;
+  min-height: -webkit-fill-available;
+  background-color: #08070a;
+  overflow: hidden;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+
+body {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+  width: 100vw;
+  height: calc(100% + env(safe-area-inset-bottom, 0px));
+  min-height: 100vh;
+  min-height: 100lvh;
+  min-height: -webkit-fill-available;
+  overflow: hidden;
+  background-color: #08070a;
+  color: #f5efe2;
+  font-family: var(--font-btn);
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+
+#app {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+  width: 100vw;
+  height: calc(100% + env(safe-area-inset-bottom, 0px));
+  min-height: 100vh;
+  min-height: 100lvh;
+  overflow: hidden;
+}
+
+button {
+  font-family: var(--font-btn);
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  outline: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
