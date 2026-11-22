@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Suit, Rank } from '../types';
+  import { SUIT_PATHS } from './constants';
 
   export let rank: Rank = 'jack';
   export let suit: Suit | null = null;
@@ -8,18 +9,6 @@
 
   $: isRedSuit = suit === 'hearts' || suit === 'diamonds';
   $: isBlackSuit = suit === 'clubs' || suit === 'spades';
-
-  // Reusable SVG path centered at (0, 0) within a ~32x32 box for the chosen suit
-  const SUIT_PATHS: Record<Suit, string> = {
-    hearts:
-      'M 0 13 C 0 13 -13 4 -13 -5.5 C -13 -10.5 -9 -13.5 -5 -13.5 C -2.2 -13.5 -0.6 -11.8 0 -9.8 C 0.6 -11.8 2.2 -13.5 5 -13.5 C 9 -13.5 13 -10.5 13 -5.5 C 13 4 0 13 0 13 Z',
-    diamonds:
-      'M 0 -14 C 3 -8 7.5 -3.5 13 0 C 7.5 3.5 3 8 0 14 C -3 8 -7.5 3.5 -13 0 C -7.5 -3.5 -3 -8 0 -14 Z',
-    clubs:
-      'M 0 -14 C -3.8 -14 -6.8 -11 -6.8 -7.2 C -6.8 -5.4 -6 -3.8 -4.8 -2.7 C -5.9 -3.1 -7.1 -3.4 -8.4 -3.4 C -12.2 -3.4 -15.2 -0.4 -15.2 3.4 C -15.2 7.2 -12.2 10.2 -8.4 10.2 C -5.5 10.2 -3 8.4 -2 5.8 L -5 14.5 H 5 L 2 5.8 C 3 8.4 5.5 10.2 8.4 10.2 C 12.2 10.2 15.2 7.2 15.2 3.4 C 15.2 -0.4 12.2 -3.4 8.4 -3.4 C 7.1 -3.4 5.9 -3.1 4.8 -2.7 C 6 -3.8 6.8 -5.4 6.8 -7.2 C 6.8 -11 3.8 -14 0 -14 Z',
-    spades:
-      'M 0 -14 C 0 -14 -13 -3.5 -13 4.5 C -13 8.6 -9.8 11.5 -6 11.5 C -3.8 11.5 -2 10.3 -1.2 8.7 L -4.8 15 H 4.8 L 1.2 8.7 C 2 10.3 3.8 11.5 6 11.5 C 9.8 11.5 13 8.6 13 4.5 C 13 -3.5 0 -14 0 -14 Z'
-  };
 </script>
 
 <div

@@ -19,20 +19,3 @@ export interface FloatingDelta {
   type: 'health' | 'attack';
   xOffset: number;
 }
-
-export interface SuitTheme {
-  id: Suit | 'default' | 'dead';
-  primary: string;
-  secondary: string;
-  accent: string;
-  glow: string;
-  bgDark: string;
-  bgMid: string;
-  bgLight: string;
-  cardBg: string;
-  border: string;
-  swirlA: [number, number, number];
-  swirlB: [number, number, number];
-  swirlC: [number, number, number];
-}
-
