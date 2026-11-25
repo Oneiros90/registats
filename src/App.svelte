@@ -25,6 +25,7 @@
   // Floating suit selector visibility state
   let isSuitPopoverVisible: boolean = nobles[selectedId].suit === null;
   let suitPopoverTimer: ReturnType<typeof setTimeout> | null = null;
+  let saveTimer: ReturnType<typeof setTimeout> | null = null;
 
   // Modal states
   let showMenuModal: boolean = false;
@@ -34,7 +35,6 @@
   // Animation states
   let healthBump: 'up' | 'down' | null = null;
   let attackBump: 'up' | 'down' | null = null;
-  let cardTransitionKey: number = 0;
   let isPurifyingAnimation: boolean = false;
   let purifyingNobleId: number | null = null;
   let deathTimer: ReturnType<typeof setTimeout> | null = null;
@@ -49,8 +49,14 @@
     hasMounted = true;
   });
 
+  // Debounce localStorage writes so synchronous disk I/O never blocks animation frames
   $: if (hasMounted) {
-    saveGameState(nobles, selectedId);
+    const snapshotNobles = nobles;
+    const snapshotId = selectedId;
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      saveGameState(snapshotNobles, snapshotId);
+    }, 180);
   }
 
   $: currentNoble = nobles[selectedId];
@@ -120,7 +126,6 @@
 
     if (selectedId !== id) {
       selectedId = id;
-      cardTransitionKey++;
       clearSuitPopoverTimer();
 
       const autoAssigned = tryAutoAssignRemainingSuit(id);
@@ -147,27 +152,21 @@
   function spawnDelta(value: number, type: 'health' | 'attack') {
     const id = ++deltaCounter;
     const xOffset = (Math.random() - 0.5) * 32;
-    floatingDeltas = [...floatingDeltas.slice(-8), { id, value, type, xOffset }];
+    floatingDeltas = [...floatingDeltas.slice(-6), { id, value, type, xOffset }];
     setTimeout(() => {
       floatingDeltas = floatingDeltas.filter((d) => d.id !== id);
-    }, 750);
+    }, 700);
   }
 
   function triggerBump(stat: 'health' | 'attack', dir: 'up' | 'down') {
     if (stat === 'health') {
-      healthBump = null;
       if (bumpTimeoutH) clearTimeout(bumpTimeoutH);
-      requestAnimationFrame(() => {
-        healthBump = dir;
-        bumpTimeoutH = setTimeout(() => (healthBump = null), 240);
-      });
+      healthBump = dir;
+      bumpTimeoutH = setTimeout(() => (healthBump = null), 200);
     } else {
-      attackBump = null;
       if (bumpTimeoutA) clearTimeout(bumpTimeoutA);
-      requestAnimationFrame(() => {
-        attackBump = dir;
-        bumpTimeoutA = setTimeout(() => (attackBump = null), 240);
-      });
+      attackBump = dir;
+      bumpTimeoutA = setTimeout(() => (attackBump = null), 200);
     }
   }
 
@@ -231,11 +230,10 @@
 
       if (nextCorruptedId !== null && selectedId === purifiedId) {
         selectedId = nextCorruptedId;
-        cardTransitionKey++;
         const autoAssigned = tryAutoAssignRemainingSuit(nextCorruptedId);
         isSuitPopoverVisible = !autoAssigned && nobles[nextCorruptedId].suit === null;
       }
-    }, 1450);
+    }, 1250);
   }
 
   function confirmReset() {
@@ -247,12 +245,15 @@
       clearTimeout(deathTimer);
       deathTimer = null;
     }
+    if (saveTimer) {
+      clearTimeout(saveTimer);
+      saveTimer = null;
+    }
     isPurifyingAnimation = false;
     purifyingNobleId = null;
     nobles = createInitialNobles();
     selectedId = 0;
     isSuitPopoverVisible = true;
-    cardTransitionKey++;
     clearGameState();
   }
 
@@ -270,6 +271,7 @@
   onDestroy(() => {
     clearSuitPopoverTimer();
     if (deathTimer) clearTimeout(deathTimer);
+    if (saveTimer) clearTimeout(saveTimer);
   });
 </script>
 
@@ -282,7 +284,6 @@
   class:suit-none={currentNoble.suit === null}
   class:state-low-health={isLowHealth}
   class:state-purified-light={isLightPurifiedScreen}
-  class:state-purifying={isPurifyingAnimation}
   style="--low-hp-level: {lowHealthIntensity};"
 >
   <BalatroBackground
@@ -326,32 +327,30 @@
       onOpenMenu={() => (showMenuModal = true)}
     />
 
-    {#key cardTransitionKey}
-      <main class="battle-stage" class:stage-purified-light={isLightPurifiedScreen}>
-        <StatCounter
-          type="health"
-          value={currentNoble.health}
-          maxValue={currentNoble.maxHealth}
-          isPurified={isCurrentPurified}
-          {isLowHealth}
-          {isPurifyingAnimation}
-          bump={healthBump}
-          deltas={healthDeltas}
-          onChange={(d) => changeStat('health', d)}
-        />
+    <main class="battle-stage" class:stage-purified-light={isLightPurifiedScreen}>
+      <StatCounter
+        type="health"
+        value={currentNoble.health}
+        maxValue={currentNoble.maxHealth}
+        isPurified={isCurrentPurified}
+        {isLowHealth}
+        {isPurifyingAnimation}
+        bump={healthBump}
+        deltas={healthDeltas}
+        onChange={(d) => changeStat('health', d)}
+      />
 
-        <StatCounter
-          type="attack"
-          value={displayedAttack}
-          maxValue={currentNoble.maxAttack}
-          isPurified={isCurrentPurified}
-          hideButtons={isCurrentPurified}
-          bump={attackBump}
-          deltas={attackDeltas}
-          onChange={(d) => changeStat('attack', d)}
-        />
-      </main>
-    {/key}
+      <StatCounter
+        type="attack"
+        value={displayedAttack}
+        maxValue={currentNoble.maxAttack}
+        isPurified={isCurrentPurified}
+        hideButtons={isCurrentPurified}
+        bump={attackBump}
+        deltas={attackDeltas}
+        onChange={(d) => changeStat('attack', d)}
+      />
+    </main>
   </div>
 </div>
 
@@ -368,7 +367,6 @@
     min-height: 100lvh;
     overflow: hidden;
     --suit-accent: rgba(212, 178, 108, 0.45);
-    transition: transform 0.3s ease;
   }
 
   .app-shell.suit-red {
@@ -377,14 +375,6 @@
 
   .app-shell.suit-black {
     --suit-accent: rgba(245, 239, 226, 0.55);
-  }
-
-  .app-shell.state-purifying {
-    animation: purifyScreenPulse 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .app-shell.state-low-health {
-    animation: lowHealthAppThrob calc(1.1s - var(--low-hp-level, 1) * 0.12s) infinite ease-in-out;
   }
 
   .layout-grid {
@@ -418,18 +408,5 @@
       grid-template-rows: 1fr 1fr;
       gap: 4px;
     }
-  }
-
-  @keyframes lowHealthAppThrob {
-    0%, 100% { transform: scale(1); }
-    18% { transform: scale(1.005); }
-    32% { transform: scale(1); }
-    48% { transform: scale(1.003); }
-  }
-
-  @keyframes purifyScreenPulse {
-    0% { transform: scale(1); }
-    25% { transform: scale(1.015); }
-    100% { transform: scale(1); }
   }
 </style>

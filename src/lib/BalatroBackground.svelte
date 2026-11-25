@@ -31,19 +31,14 @@
       <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="jack-pattern" width="160" height="160" patternUnits="userSpaceOnUse" patternTransform="rotate(-12)">
-            <!-- Stone Masonry Grid -->
             <rect x="2" y="2" width="156" height="156" fill="none" class="bg-grid-line" />
             <path d="M0 80 H160 M80 0 V160" class="bg-grid-faint" />
-
-            <!-- Cracked Stone Hairlines -->
             <path d="M12 18 L28 36 L22 52 M140 120 L124 135 L132 150" fill="none" class="corruption-crack-1" />
 
-            <!-- Crossed Halberds / Pikes behind Knight Shield -->
             <path d="M30 130 L130 30 M30 30 L130 130" class="emblem-stroke-bold" />
             <path d="M118 24 C132 20 138 30 126 42 L114 34 Z" class="emblem-fill-faint" />
             <path d="M42 24 C28 20 22 30 34 42 L46 34 Z" class="emblem-fill-faint" />
 
-            <!-- Visored Knight Helmet in Center -->
             <path
               d="M54 70 C54 50 65 42 80 42 C95 42 106 50 106 70 V102 L80 120 L54 102 Z"
               class="emblem-fill-dark"
@@ -53,17 +48,14 @@
               fill="none"
               class="emblem-stroke-main"
             />
-            <!-- Helmet Visor Slits -->
             <path d="M60 76 L76 81 M100 76 L84 81" class="accent-glow-stroke" />
             <path d="M80 82 V118" class="emblem-stroke-faint" />
 
-            <!-- Chosen Suit Symbol clearly emblazoned on the Knight's Helmet Crest & Corner Shield -->
             {#if suit}
               <path d={SUIT_PATHS[suit]} transform="translate(80, 61) scale(0.95)" class="accent-fill-glow" />
               <path d={SUIT_PATHS[suit]} transform="translate(80, 140) scale(0.65)" class="accent-fill-subtle" />
             {/if}
 
-            <!-- Corner Rings -->
             <circle cx="0" cy="0" r="10" fill="none" class="emblem-stroke-faint" />
             <circle cx="160" cy="0" r="10" fill="none" class="emblem-stroke-faint" />
             <circle cx="0" cy="160" r="10" fill="none" class="emblem-stroke-faint" />
@@ -82,7 +74,6 @@
       <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="queen-pattern" width="180" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-14)">
-            <!-- Gothic Cathedral Arch & Vines -->
             <path
               d="M15 170 V78 C15 36 90 10 90 10 C90 10 165 36 165 78 V170"
               fill="none"
@@ -94,7 +85,6 @@
               class="corruption-crack-2"
             />
 
-            <!-- Queen's Pointed Tiara / Coronet -->
             <path
               d="M42 108 L52 62 L73 84 L90 46 L107 84 L128 62 L138 108 Z"
               class="emblem-fill-dark"
@@ -105,7 +95,6 @@
               class="emblem-stroke-main"
             />
 
-            <!-- Chosen Suit Symbol clearly embedded inside the Queen's Tiara & Tips -->
             {#if suit}
               <path d={SUIT_PATHS[suit]} transform="translate(90, 88) scale(1.05)" class="accent-fill-glow" />
               <path d={SUIT_PATHS[suit]} transform="translate(90, 34) scale(0.55)" class="accent-fill-glow" />
@@ -113,7 +102,6 @@
               <path d={SUIT_PATHS[suit]} transform="translate(130, 51) scale(0.45)" class="accent-fill-subtle" />
             {/if}
 
-            <!-- Ritual Chalice below Tiara -->
             <path
               d="M68 122 C68 138 90 144 90 144 C90 144 112 138 112 122 Z M90 144 V164 M74 164 H106"
               fill="none"
@@ -133,7 +121,6 @@
       <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="king-pattern" width="210" height="210" patternUnits="userSpaceOnUse" patternTransform="rotate(-15)">
-            <!-- Floor Fissures / Tracery -->
             <path
               d="M0 105 L45 88 L72 115 L105 95 L142 122 L175 96 L210 105"
               fill="none"
@@ -145,7 +132,6 @@
               class="corruption-crack-3"
             />
 
-            <!-- Towering Throne Backrest -->
             <path
               d="M48 186 V56 L68 26 L86 62 L105 16 L124 62 L142 26 L162 56 V186 Z"
               class="emblem-fill-dark"
@@ -156,7 +142,6 @@
               class="emblem-stroke-main"
             />
 
-            <!-- Grand Imperial Crown on the Throne -->
             <path
               d="M52 140 L44 82 L78 106 L105 60 L132 106 L166 82 L158 140 Z"
               class="emblem-fill-crown"
@@ -167,7 +152,6 @@
               class="accent-glow-stroke"
             />
 
-            <!-- Chosen Suit Symbol prominently set inside the King's Crown & on the Crown Tips -->
             {#if suit}
               <path d={SUIT_PATHS[suit]} transform="translate(105, 114) scale(1.35)" class="accent-fill-glow" />
               <path d={SUIT_PATHS[suit]} transform="translate(105, 45) scale(0.62)" class="accent-fill-glow" />
@@ -183,7 +167,7 @@
     </div>
   {/if}
 
-  <!-- Ambient Vignette -->
+  <!-- Static pre-painted Vignette (Zero per-frame radial-gradient transitions) -->
   <div class="corruption-vignette"></div>
 </div>
 
@@ -200,14 +184,12 @@
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
-    /* Default Neutral Accents (Sober antique gold/brass) */
+    contain: strict;
     --accent-stroke: rgba(215, 180, 105, 0.32);
     --accent-fill: rgba(215, 180, 105, 0.38);
     --accent-faint: rgba(215, 180, 105, 0.16);
     --accent-aura: rgba(215, 180, 105, 0.08);
-    transition:
-      background-color 0.45s ease,
-      box-shadow 0.45s ease;
+    transition: background-color 0.28s ease;
   }
 
   /* ==========================================================================
@@ -240,7 +222,6 @@
     --vignette-dark: rgba(0, 0, 0, 0.94);
   }
 
-  /* Suit Accents on Dark Corrupted Backgrounds */
   .noble-backdrop.accent-red {
     --accent-stroke: rgba(225, 32, 54, 0.52);
     --accent-fill: rgba(238, 38, 62, 0.65);
@@ -256,7 +237,7 @@
   }
 
   /* ==========================================================================
-     PURIFIED (LIGHT) PALETTES BY RANK — Keeping Suit & Accent!
+     PURIFIED (LIGHT) PALETTES BY RANK
      ========================================================================== */
   .noble-backdrop.state-purified.rank-jack {
     background-color: #ece6da;
@@ -285,7 +266,6 @@
     --vignette-dark: rgba(165, 148, 120, 0.55);
   }
 
-  /* Suit Accents on Light Purified Backgrounds (Keeping Red for ♥/♦ and Black for ♣/♠!) */
   .noble-backdrop.state-purified.accent-neutral {
     --accent-stroke: rgba(180, 134, 36, 0.55);
     --accent-fill: rgba(196, 146, 38, 0.65);
@@ -307,12 +287,14 @@
     --accent-aura: rgba(30, 30, 36, 0.12);
   }
 
-  /* Slow Diagonal Scrolling Pattern Layer */
+  /* Hardware-accelerated GPU layer for diagonal scrolling pattern */
   .scrolling-pattern-layer {
     position: absolute;
     inset: -220px;
     width: calc(100% + 440px);
     height: calc(100% + 440px);
+    will-change: transform;
+    backface-visibility: hidden;
   }
 
   .speed-jack {
@@ -327,92 +309,78 @@
     animation: driftKing 26s linear infinite;
   }
 
-  /* SVG Pattern Classes */
+  /* SVG Pattern Classes — No CSS transitions inside <pattern> so WebKit caches the pattern tile on the GPU! */
   .bg-grid-line {
     stroke: var(--base-faint);
     stroke-width: 1.5;
-    transition: stroke 0.45s ease;
   }
 
   .bg-grid-faint {
     stroke: var(--base-faint);
     stroke-width: 1;
     stroke-dasharray: 6 6;
-    transition: stroke 0.45s ease;
   }
 
   .emblem-stroke-main {
     stroke: var(--base-line);
     stroke-width: 2;
-    transition: stroke 0.45s ease;
   }
 
   .emblem-stroke-bold {
     stroke: var(--base-line);
     stroke-width: 3;
     stroke-linecap: round;
-    transition: stroke 0.45s ease;
   }
 
   .emblem-stroke-faint {
     stroke: var(--base-faint);
     stroke-width: 1.5;
-    transition: stroke 0.45s ease;
   }
 
   .emblem-fill-dark {
     fill: var(--dark-fill);
-    transition: fill 0.45s ease;
   }
 
   .emblem-fill-faint {
     fill: var(--base-line);
-    transition: fill 0.45s ease;
   }
 
   .emblem-fill-crown {
     fill: var(--dark-fill);
-    transition: fill 0.45s ease;
   }
 
   .corruption-crack-1 {
     stroke: var(--accent-faint);
     stroke-width: 1.5;
     stroke-linecap: round;
-    transition: stroke 0.45s ease;
   }
 
   .corruption-crack-2 {
     stroke: var(--accent-stroke);
     stroke-width: 1.8;
     stroke-dasharray: 12 4;
-    transition: stroke 0.45s ease;
   }
 
   .corruption-crack-3 {
     stroke: var(--accent-stroke);
     stroke-width: 2.2;
-    transition: stroke 0.45s ease;
   }
 
   .accent-glow-stroke {
     stroke: var(--accent-stroke);
     stroke-width: 2.2;
     stroke-linecap: round;
-    transition: stroke 0.45s ease;
   }
 
   .accent-fill-glow {
     fill: var(--accent-fill);
-    transition: fill 0.45s ease;
   }
 
   .accent-fill-subtle {
     fill: var(--accent-faint);
-    transition: fill 0.45s ease;
   }
 
-  /* Vignette */
+  /* Vignette (No transition on radial-gradient to avoid full-screen CPU repaints) */
   .corruption-vignette {
     position: absolute;
     inset: 0;
@@ -420,17 +388,6 @@
     background:
       radial-gradient(circle at 50% 15%, var(--accent-aura) 0%, transparent 55%),
       radial-gradient(circle at 50% 54%, transparent var(--vignette-spread), var(--vignette-dark) 100%);
-    transition: background 0.45s ease, box-shadow 0.45s ease;
-  }
-
-  .noble-backdrop:not(.state-purified).rank-queen .corruption-vignette {
-    box-shadow: inset 0 0 65px 14px rgba(0, 0, 0, 0.78);
-  }
-
-  .noble-backdrop:not(.state-purified).rank-king .corruption-vignette {
-    box-shadow:
-      inset 0 0 110px 32px rgba(0, 0, 0, 0.92),
-      inset 0 0 40px 6px var(--accent-faint);
   }
 
   @keyframes driftJack {

@@ -195,10 +195,9 @@
     font-variant-numeric: tabular-nums;
     text-align: center;
     white-space: nowrap;
-    transition:
-      transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1),
-      color 0.2s ease,
-      text-shadow 0.3s ease;
+    will-change: transform;
+    /* Do NOT transition text-shadow on 35rem text (avoids 300ms of full-glyph shadow re-blurring on iOS) */
+    transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .health-number {

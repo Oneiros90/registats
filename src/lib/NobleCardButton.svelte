@@ -19,7 +19,7 @@
   $: isDiscovered = active || hasSuit || noble.health < noble.maxHealth || noble.attack < noble.maxAttack;
   $: isUndiscovered = !purified && !isDiscovered;
   $: isCorrupted = !purified && isDiscovered;
-  $: activeParticles = active ? FOG_PARTICLES : FOG_PARTICLES.filter((_, idx) => idx % 3 === 0);
+  $: activeParticles = active ? FOG_PARTICLES.filter((_, idx) => idx % 2 === 0) : FOG_PARTICLES.filter((_, idx) => idx % 6 === 0);
 </script>
 
 <div class="noble-slot" class:slot-active={active}>
@@ -254,19 +254,21 @@
 
   .fog-wisp {
     position: absolute;
-    width: var(--size, 22px);
-    height: var(--size, 22px);
-    margin-left: calc(var(--size, 22px) * -0.5);
-    margin-top: calc(var(--size, 22px) * -0.5);
+    width: calc(var(--size, 22px) * 1.35);
+    height: calc(var(--size, 22px) * 1.35);
+    margin-left: calc(var(--size, 22px) * -0.675);
+    margin-top: calc(var(--size, 22px) * -0.675);
     border-radius: 50%;
+    /* Soft multi-stop radial gradient requires zero CSS filter:blur() passes on iOS WebKit */
     background: radial-gradient(
       circle,
-      rgba(4, 2, 8, 0.96) 0%,
-      rgba(26, 10, 44, 0.76) 45%,
-      rgba(48, 18, 78, 0) 75%
+      rgba(4, 2, 8, 0.92) 0%,
+      rgba(22, 9, 38, 0.65) 36%,
+      rgba(42, 16, 70, 0.24) 62%,
+      rgba(48, 18, 78, 0) 82%
     );
-    filter: blur(4px);
     opacity: 0;
+    will-change: transform, opacity;
     animation: zeroGravityFogExpand var(--dur, 1.8s) var(--delay, 0s) ease-out infinite;
   }
 
@@ -524,8 +526,8 @@
   }
 
   @keyframes nobleCardPurifyBurst {
-    0% { transform: scale(1.3); filter: brightness(2); }
-    50% { transform: scale(0.94); filter: brightness(1.4); }
-    100% { transform: scale(1); filter: brightness(1); }
+    0% { transform: scale3d(1.28, 1.28, 1); }
+    50% { transform: scale3d(0.95, 0.95, 1); }
+    100% { transform: scale3d(1, 1, 1); }
   }
 </style>
